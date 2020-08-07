@@ -10,7 +10,7 @@ from parser_options import ParserOptions
 from constants import *
 
 def tensorflow_invert(invert=False):
-    tf.enable_eager_execution()
+    #tf.enable_eager_execution()
     image = tf.io.read_file('../deformed_label.jpg')
     image = tf.image.decode_jpeg(image, channels=3)
     image = tf.cast(image, tf.float32)
@@ -36,7 +36,7 @@ def check_duplicates(source_folder_name, destination_folder_name):
         print("NOT OK")
 
 def network_predict(pretrained_model=''):
-    tf.enable_eager_execution(device_policy=tf.contrib.eager.DEVICE_PLACEMENT_SILENT)
+    #tf.enable_eager_execution(device_policy=tf.contrib.eager.DEVICE_PLACEMENT_SILENT)
 
     if not pretrained_model:
         raise NotImplementedError()
@@ -48,7 +48,7 @@ def network_predict(pretrained_model=''):
     args.execute_graph = 1
     args.pretrained_models_dir = pretrained_model
     args.num_downs = 8
-    args.resize, args.size = (256,256), (256,256)
+    args.resize, args.size = (512,512), (512,512)
     args.model = DEEPLAB_50
     args.inference_dir = 'prod_evaluation_dataset'
     args.debug = 0

@@ -22,7 +22,7 @@ class TensorboardSummary(object):
 
         self.args = args
         self.experiment_dir = self.generate_directory(args)
-        self.writer = tf.contrib.summary.create_file_writer(os.path.join(self.experiment_dir), flush_millis=10000)
+        self.writer = tf.summary.create_file_writer(os.path.join(self.experiment_dir), flush_millis=10000)
 
         self.train_step = 0
         self.test_step = 0
@@ -87,8 +87,8 @@ class TensorboardSummary(object):
             step (int):  global step value to record
         """
 
-        with self.writer.as_default(), tf.contrib.summary.always_record_summaries():
-            tf.contrib.summary.scalar(tag, value, step=step)
+        with self.writer.as_default():
+            tf.summary.scalar(tag, value, step=step)
 
     def visualize_image(self, images, targets, outputs, split=TRAIN):
         """
@@ -108,10 +108,10 @@ class TensorboardSummary(object):
         targets = tf.stack([tensor2im(target) for target in targets[:, : int(self.args.resize[0] /2), : int(self.args.resize[0] /2), :]])
         images = tf.image.resize_bilinear(images, tf.convert_to_tensor([int(self.args.resize[0] / 2), int(self.args.resize[0] / 2)], dtype=tf.int32))
 
-        with self.writer.as_default(), tf.contrib.summary.always_record_summaries():
-            tf.contrib.summary.image(split + '/ZZ Image', self.image_grid(images), step=step)
-            tf.contrib.summary.image(split + '/Predicted label', self.image_grid(outputs), step=step)
-            tf.contrib.summary.image(split + '/Groundtruth label', self.image_grid(targets), step=step)
+        with self.writer.as_default():
+            tf.summary.image(split + '/ZZ Image', self.image_grid(images), step=step)
+            tf.summary.image(split + '/Predicted label', self.image_grid(outputs), step=step)
+            tf.summary.image(split + '/Groundtruth label', self.image_grid(targets), step=step)
 
         return images, outputs,  targets
 

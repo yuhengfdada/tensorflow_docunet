@@ -7,7 +7,7 @@ from util.general_functions import print_training_info
 from constants import *
 
 def main():
-    tf.enable_eager_execution(device_policy=tf.contrib.eager.DEVICE_PLACEMENT_SILENT)
+    #tf.enable_eager_execution(device_policy=tf.contrib.eager.DEVICE_PLACEMENT_SILENT)
     args = ParserOptions().parse()  # get training options
     print_training_info(args)
 

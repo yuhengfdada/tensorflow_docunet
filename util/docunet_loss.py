@@ -4,7 +4,7 @@ from tensorflow.python.ops.losses import losses_impl
 class DocunetLoss(tf.keras.losses.CategoricalCrossentropy):
     """Implementation of the DocUnet loss functions as presented in http://openaccess.thecvf.com/content_cvpr_2018/papers/Ma_DocUNet_Document_Image_CVPR_2018_paper.pdf"""
 
-    def __init__(self, lamda=0.1, reduction=losses_impl.ReductionV2.NONE):
+    def __init__(self, lamda=0.1, reduction=losses_impl.Reduction.NONE):
         """
         Initialize the loss function
 

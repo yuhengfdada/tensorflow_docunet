@@ -110,7 +110,7 @@ def get_lr_scheduler(args, global_step, loader_length):
     num_steps = int(args.epochs * loader_length)
 
     if args.lr_policy == LR_POLY_POLICY:
-        lr_scheduler = tf.train.polynomial_decay(args.lr, global_step, num_steps, args.lr / 10)
+        lr_scheduler = tf.compat.v1.train.polynomial_decay(args.lr, global_step, num_steps, args.lr / 10)
     elif args.lr_policy == LR_NONE_POLICY:
         return args.lr
     else:
@@ -134,9 +134,9 @@ def get_optimizer(args, global_step, loader_length):
     lr_scheduler = get_lr_scheduler(args, global_step, loader_length)
 
     if args.optim == SGD:
-        optimizer = tf.train.MomentumOptimizer(learning_rate=lr_scheduler, momentum=args.momentum, use_nesterov=True)
+        optimizer = tf.compat.v1.train.MomentumOptimizer(learning_rate=lr_scheduler, momentum=args.momentum, use_nesterov=True)
     elif args.optim == ADAM:
-        optimizer = tf.train.AdamOptimizer(learning_rate=lr_scheduler)
+        optimizer = tf.compat.v1.train.AdamOptimizer(learning_rate=lr_scheduler)
     elif args.optim == AMSGRAD:
         raise NotImplementedError
     else:

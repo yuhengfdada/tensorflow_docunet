@@ -9,7 +9,7 @@ class InvertedDocunet(object):
 
     NUM_CLASSES = 2
     CLASSES = ["foreground", "background"]
-    ROOT = '../../../datasets/'
+    ROOT = '../'
     DEFORMED = 'deformed_labels'
     DEFORMED_EXT = '.jpg'
     VECTOR_FIELD = 'inverted_vf'

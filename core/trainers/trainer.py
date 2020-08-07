@@ -41,12 +41,12 @@ class Trainer(object):
 
         if not self.args.inference:
             self.criterion = get_loss(args.loss_type)
-            self.global_step = tf.train.get_or_create_global_step()
+            self.global_step = tf.compat.v1.train.get_or_create_global_step()
             self.optimizer = get_optimizer(args, self.global_step, self.train_loader.length)
 
-        if args.execute_graph:
-            self.apply_gradients = tf.contrib.eager.defun(self.apply_gradients)
-            self.model.call = tf.contrib.eager.defun(self.model.call)
+        #if args.execute_graph:
+            #self.apply_gradients = tf.contrib.eager.defun(self.apply_gradients)
+            #self.model.call = tf.contrib.eager.defun(self.model.call)
 
     def apply_gradients(self, gradients, variables, global_step):
         """
@@ -106,13 +106,13 @@ class Trainer(object):
 
                 l2_reg = tf.add_n([tf.nn.l2_loss(v) for v in self.model.trainable_variables if 'bias' not in v.name]) * self.args.weight_decay
                 loss = tf.add(loss, l2_reg)
-
+            '''
             # Show 10 * 3 inference results each epoch
             if split != VISUALIZATION and i % (loader.length // 10) == 0:
                 image, target, output = self.summary.visualize_image(image, target, output, split=split)
             elif split == VISUALIZATION:
                 image, target, output = self.summary.visualize_image(image, target, output, split=split)
-
+            '''
             total_loss += loss.numpy()
             total_ssim += tf.image.ssim(output, target, max_val=1)
             bar.set_description(split + ' loss: %.3f' % (loss.numpy()))
@@ -125,7 +125,7 @@ class Trainer(object):
                     self.best_model = copy.deepcopy(self.model)
 
         self.summary.add_scalar(split + '/total_loss_epoch', total_loss, epoch)
-        self.summary.add_scalar(split + '/sssim', total_ssim , epoch)
+        #self.summary.add_scalar(split + '/sssim', total_ssim , epoch)
         print('\n=>Epoches %i, learning rate = %.6f, \previous best = %.4f' % (epoch, self.optimizer._lr_t.numpy(), self.best_loss))
 
     def inference(self):

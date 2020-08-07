@@ -20,7 +20,7 @@ class ParserOptions():
         parser.add_argument('--second_loss_rate', type=float, default=10, help='used to tune the overall impact of the second loss')
         parser.add_argument('--norm_layer', type=str, default=BATCH_NORM, choices=[INSTANCE_NORM, BATCH_NORM, SYNC_BATCH_NORM])
         parser.add_argument('--init_type', type=str, default=KAIMING_INIT, choices=[KAIMING_INIT, XAVIER_INIT])
-        parser.add_argument('--resize', type=str, default='64,64', help='image resize: h,w')
+        parser.add_argument('--resize', type=str, default='512,512', help='image resize: h,w')
         parser.add_argument('--batch_size', type=int, default=2, metavar='N', help='input batch size for training (default: 2)')
         parser.add_argument('--optim', type=str, default=ADAM, choices=[SGD, ADAM, RMSPROP, AMSGRAD, ADABOUND])
         parser.add_argument('--lr', type=float, default=0.0001, metavar='LR', help='learning rate (default: auto)')
